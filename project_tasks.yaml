@@ -1,0 +1,20 @@
+project:
+  name: "AutoDev AI Hub"
+  description: "An AI-powered autonomous software development platform designed to manage the entire project lifecycle from idea to deployment."
+  targets:
+    - windows: true  # Via Electron
+    - browser: true  # Web interface
+  tech_stack_preference: # Preferred technologies for the agent to consider
+    backend: "Node.js with Express/Fastify"
+    frontend: "React with Electron"
+    database: "PostgreSQL or MongoDB"
+    ci_cd: "GitHub Actions, Docker, Kubernetes/Helm"
+    iac: "Terraform"
+
+backlog:
+  - id: 1
+    title: "Round 1 - Project Briefing & Initial Documentation"
+    description: "Generate the initial README.md for the AutoDev AI Hub, outlining its vision, core features, and how it simplifies software development. This round should also define key project objectives and high-level architecture overview."
+    status: "Not Started"
+    priority: "High"
+    assigned_agent: "Docs Agent, Specification Module" # Indicate which agents are primarily responsible
