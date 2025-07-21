@@ -1,0 +1,4 @@
+apiVersion: v2
+name: auto-dev-ai-hub
+description: A Helm chart for AutoDev AI Hub
+version: 0.1.0
