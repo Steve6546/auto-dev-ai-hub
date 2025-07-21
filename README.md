@@ -13,6 +13,23 @@
 - Batch 1: Initial scaffolding
 - Batch 2: CI/CD, linting, Docker & Infra stubs
 - Batch 3: API endpoints, Env vars & Secrets, Logging, Metrics, Testing
+- Batch 4: AI Integration, Context Management, Agents Workflow, Error Handling, Integration Tests, Secrets Management
+
+## AI Integration
+
+To use the AI features, you need to add your OpenAI API key to the `.env` file:
+
+```
+OPENAI_API_KEY=your-api-key
+```
+
+## Running integration tests
+
+To run the integration tests, use the following command:
+
+```bash
+npm test
+```
 
 ## Running the server
 
