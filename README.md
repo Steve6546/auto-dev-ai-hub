@@ -12,3 +12,24 @@
 
 - Batch 1: Initial scaffolding
 - Batch 2: CI/CD, linting, Docker & Infra stubs
+- Batch 3: API endpoints, Env vars & Secrets, Logging, Metrics, Testing
+
+## Running the server
+
+To run the backend server, use the following command:
+
+```bash
+npm run start:backend
+```
+
+## Running tests
+
+To run the tests, use the following command:
+
+```bash
+npm test
+```
+
+## Accessing metrics
+
+The metrics are available at `http://localhost:4000/metrics`.
