@@ -24,6 +24,12 @@ backlog:
     status: "Not Started"
     priority: "High"
     assigned_agent: "Specification Module, Code Agent, Docs Agent"
+  - id: 3
+    title: "Round 3 - Initial UI Wireframes Design"
+    description: "Design the initial UI wireframes for the AutoDev AI Hub dashboard. This includes mockups for the main panel (showing round status, logs console), a sidebar (for Rounds, Memory, Settings), and a footer (for overall project status). Focus on key components and user interaction flows. Output should be in a text-based format (e.g., ASCII art, simple JSON, or detailed textual description) saved in ui-wires/."
+    status: "Not Started"
+    priority: "High"
+    assigned_agent: "Specification Module, Code Agent, Docs Agent"
   - id: 2
     title: "Round 2 - Tech Stack Design & Documentation"
     description: "Based on the project targets (Windows via Electron, Browser via React) and preferred technologies, design a comprehensive tech stack for AutoDev AI Hub. This includes choices for Backend, Frontend, Database, CI/CD, and Infrastructure as Code. The output should justify the choices and include high-level architectural considerations in TECH_STACK.md."
