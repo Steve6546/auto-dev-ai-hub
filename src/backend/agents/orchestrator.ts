@@ -1,6 +1,6 @@
-import CodeAgent from '../../agents/code-agent';
-import TestAgent from '../../agents/test-agent';
-import ReviewAgent from '../../agents/review-agent';
+import CodeAgent from './code-agent';
+import TestAgent from './test-agent';
+import ReviewAgent from './review-agent';
 
 class Orchestrator {
   private codeAgent: CodeAgent;

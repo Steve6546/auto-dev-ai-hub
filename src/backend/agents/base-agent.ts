@@ -15,7 +15,7 @@ abstract class BaseAgent {
         model: 'gpt-3.5-turbo',
         messages: this.contextManager.getContext(),
       });
-      const message = response.choices[0].message.content ?? "";
+      const message = response.choices[0].message.content;
       this.contextManager.addMessage({ role: 'assistant', content: message });
       return message;
     } catch (error) {
