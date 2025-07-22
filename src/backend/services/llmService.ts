@@ -18,6 +18,12 @@ const openai = new OpenAI({
   apiKey: openaiApiKey,
 });
 
+/**
+ * A unified interface to call different Large Language Models (LLMs).
+ * @param modelId The ID of the model to call (e.g., 'gemini-1.5-flash', 'gpt-4').
+ * @param prompt The prompt to send to the model.
+ * @returns The response from the model as a string.
+ */
 export async function callLLM(modelId: string, prompt: string): Promise<string> {
   try {
     if (modelId.startsWith('gemini')) {

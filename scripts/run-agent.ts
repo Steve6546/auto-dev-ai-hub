@@ -7,6 +7,10 @@ import storage from 'node-persist';
 import { exec } from 'child_process';
 import * as fs from 'fs/promises';
 
+/**
+ * The main entry point for the AutoDev AI Hub agent.
+ * This script orchestrates the different agents and services to perform a round of tasks.
+ */
 async function main() {
   const roundId = parseInt(process.argv[2], 10);
   if (isNaN(roundId)) {
@@ -14,8 +18,8 @@ async function main() {
     process.exit(1);
   }
 
-  await storage.init({ dir: 'config' });
-  const modelId = await storage.getItem('defaultModel') || 'gemini-1.5-flash';
+  const config = JSON.parse(await fs.readFile('config.json', 'utf8'));
+  const modelId = config.defaultModel;
 
   let prompt: string;
   let outputPath: string;
@@ -65,6 +69,6 @@ async function main() {
 }
 
 main().catch(error => {
-  console.error(error);
+  console.error('An unexpected error occurred:', error);
   process.exit(1);
 });
