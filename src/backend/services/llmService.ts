@@ -2,25 +2,45 @@ import 'dotenv/config';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import OpenAI from 'openai';
 import secretsManager from './secrets-manager';
+import { recordUsage } from '../utils/tokenUsageTracker';
 
-const genAI = new GoogleGenerativeAI(secretsManager.getSecret('GEMINI_API_KEY'));
+const geminiApiKey = secretsManager.getSecret('GEMINI_API_KEY');
+if (!geminiApiKey) {
+  throw new Error('GEMINI_API_KEY not found in environment variables.');
+}
+const genAI = new GoogleGenerativeAI(geminiApiKey);
+
+const openaiApiKey = secretsManager.getSecret('OPENAI_API_KEY');
+if (!openaiApiKey) {
+    throw new Error('OPENAI_API_KEY not found in environment variables.');
+}
 const openai = new OpenAI({
-  apiKey: secretsManager.getSecret('OPENAI_API_KEY'),
+  apiKey: openaiApiKey,
 });
 
 export async function callLLM(modelId: string, prompt: string): Promise<string> {
-  if (modelId.startsWith('gemini')) {
-    const model = genAI.getGenerativeModel({ model: modelId });
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    return response.text();
-  } else if (modelId.startsWith('gpt')) {
-    const response = await openai.chat.completions.create({
-      model: modelId,
-      messages: [{ role: 'user', content: prompt }],
-    });
-    return response.choices[0].message.content ?? '';
-  } else {
-    throw new Error(`Unsupported model ID: ${modelId}`);
+  try {
+    if (modelId.startsWith('gemini')) {
+      const model = genAI.getGenerativeModel({ model: modelId });
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const tokenUsage = await model.countTokens(prompt);
+      await recordUsage(modelId, tokenUsage.totalTokens, 'input');
+      return response.text();
+    } else if (modelId.startsWith('gpt')) {
+      const response = await openai.chat.completions.create({
+        model: modelId,
+        messages: [{ role: 'user', content: prompt }],
+      });
+      if (response.usage) {
+        await recordUsage(modelId, response.usage.total_tokens, 'output');
+      }
+      return response.choices[0].message.content ?? '';
+    } else {
+      throw new Error(`Unsupported model ID: ${modelId}`);
+    }
+  } catch (error) {
+    console.error(`Error calling LLM with model ${modelId}:`, error);
+    throw error;
   }
 }
