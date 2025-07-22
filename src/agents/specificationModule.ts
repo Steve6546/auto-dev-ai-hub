@@ -47,3 +47,45 @@ export async function generateProjectBrief(yamlPath: string, roundId: number): P
 
   return prompt.trim();
 }
+
+export async function generateTechStackPrompt(yamlPath: string, roundId: number): Promise<string> {
+  const fileContent = await fs.readFile(yamlPath, "utf8");
+  const config = yaml.load(fileContent) as ProjectConfig;
+  const round = config.backlog.find((item) => item.id === roundId);
+
+  if (!round) {
+    throw new Error(`Round with ID ${roundId} not found in ${yamlPath}`);
+  }
+
+  const prompt = `
+    As an expert software architect, design a comprehensive and well-justified tech stack for the project "${config.project.name}".
+
+    **Project Description:** ${config.project.description}
+    **Project Targets:** ${JSON.stringify(config.project.targets)}
+    **Preferred Technologies:** ${JSON.stringify(config.project.tech_stack_preference)}
+
+    **Task:** ${round.title}
+    **Task Description:** ${round.description}
+
+    Please provide the following in a well-formatted Markdown document (TECH_STACK.md):
+
+    1.  **Recommended Tech Stack:**
+        *   **Backend:** (e.g., Node.js with Express/Fastify, Python with Django/Flask)
+        *   **Frontend:** (e.g., React with Electron for desktop, React for web)
+        *   **Database:** (e.g., PostgreSQL, MongoDB, SQLite)
+        *   **CI/CD:** (e.g., GitHub Actions, Jenkins, GitLab CI)
+        *   **Infrastructure as Code (IaC):** (e.g., Terraform, AWS CDK, Pulumi)
+        *   **Testing:** (e.g., Jest, Pytest, Cypress)
+
+    2.  **Justification for Each Choice:**
+        *   For each technology chosen, provide a brief but strong justification explaining why it's a good fit for this specific project, considering the project's goals of being an autonomous software development platform.
+
+    3.  **High-Level Architecture Overview:**
+        *   Provide a text-based or ASCII art diagram describing the high-level architecture.
+        *   Explain how the different components (Backend, Frontend, Database, Agents) will interact with each other.
+
+    The final output should be a single, clean Markdown file ready to be saved as \`TECH_STACK.md\`.
+  `;
+
+  return prompt.trim();
+}
