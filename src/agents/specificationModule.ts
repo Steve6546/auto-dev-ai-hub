@@ -15,6 +15,12 @@ interface ProjectConfig {
   }[];
 }
 
+/**
+ * Generates a prompt for the LLM to create a project brief.
+ * @param yamlPath The path to the project_tasks.yaml file.
+ * @param roundId The ID of the round to generate the brief for.
+ * @returns A prompt for the LLM.
+ */
 export async function generateProjectBrief(yamlPath: string, roundId: number): Promise<string> {
   const fileContent = await fs.readFile(yamlPath, 'utf8');
   const config = yaml.load(fileContent) as ProjectConfig;
@@ -140,6 +146,12 @@ export async function generateUIWireframePrompt(yamlPath: string, roundId: numbe
   return prompt.trim();
 }
 
+/**
+ * Generates a prompt for the LLM to design the tech stack.
+ * @param yamlPath The path to the project_tasks.yaml file.
+ * @param roundId The ID of the round to generate the tech stack for.
+ * @returns A prompt for the LLM.
+ */
 export async function generateTechStackPrompt(yamlPath: string, roundId: number): Promise<string> {
   const fileContent = await fs.readFile(yamlPath, "utf8");
   const config = yaml.load(fileContent) as ProjectConfig;
@@ -182,6 +194,12 @@ export async function generateTechStackPrompt(yamlPath: string, roundId: number)
   return prompt.trim();
 }
 
+/**
+ * Generates a prompt for the LLM to design the UI wireframes.
+ * @param yamlPath The path to the project_tasks.yaml file.
+ * @param roundId The ID of the round to generate the UI wireframes for.
+ * @returns A prompt for the LLM.
+ */
 export async function generateTechStackPrompt(yamlPath: string, roundId: number): Promise<string> {
   const fileContent = await fs.readFile(yamlPath, "utf8");
   const config = yaml.load(fileContent) as ProjectConfig;
