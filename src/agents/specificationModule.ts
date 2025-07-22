@@ -48,6 +48,52 @@ export async function generateProjectBrief(yamlPath: string, roundId: number): P
   return prompt.trim();
 }
 
+export async function generateUIWireframePrompt(yamlPath: string, roundId: number): Promise<string> {
+  const fileContent = await fs.readFile(yamlPath, "utf8");
+  const config = yaml.load(fileContent) as ProjectConfig;
+  const round = config.backlog.find((item) => item.id === roundId);
+
+  if (!round) {
+    throw new Error(`Round with ID ${roundId} not found in ${yamlPath}`);
+  }
+
+  const prompt = `
+    As an expert UI/UX designer, create a detailed textual wireframe for the dashboard of "${config.project.name}".
+
+    **Project Description:** ${config.project.description}
+
+    **Task:** ${round.title}
+    **Task Description:** ${round.description}
+
+    Please design the following components in a clear, text-based format (ASCII art is preferred for layout, but a detailed description or simple JSON is also acceptable). The output should be saved in \`ui-wires/dashboard_wireframe.md\`.
+
+    1.  **Main Layout (ASCII Art or Description):**
+        *   Show the overall layout, including the position of the Sidebar, Main Panel, and Footer.
+
+    2.  **Sidebar Components:**
+        *   Rounds: A list of project rounds (e.g., "Round 1: Docs", "Round 2: Tech Stack"). Indicate the active round.
+        *   Memory: A section to show the agent's current context or memory usage.
+        *   Settings: A link or button to open the settings panel.
+
+    3.  **Main Panel Components:**
+        *   **Round Status Display:**
+            *   Show the title of the current round.
+            *   Display the status (e.g., "In Progress", "Completed").
+            *   List the key tasks or objectives for the current round.
+        *   **Logs Console:**
+            *   A scrollable area to display real-time logs from the agents.
+            *   Include example log lines (e.g., "INFO: Generating code...", "SUCCESS: Tests passed!").
+
+    4.  **Footer Components:**
+        *   Overall Project Status (e.g., "Healthy", "Running", "Error").
+        *   Current selected AI model (e.g., "Model: gemini-1.5-flash").
+
+    The final output should be a single, clean Markdown file.
+  `;
+
+  return prompt.trim();
+}
+
 export async function generateTechStackPrompt(yamlPath: string, roundId: number): Promise<string> {
   const fileContent = await fs.readFile(yamlPath, "utf8");
   const config = yaml.load(fileContent) as ProjectConfig;

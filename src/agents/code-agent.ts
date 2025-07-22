@@ -1,4 +1,5 @@
 import BaseAgent from '../backend/agents/base-agent';
+import { callLLM } from '../backend/services/llmService';
 
 class CodeAgent extends BaseAgent {
   constructor() {
@@ -11,6 +12,11 @@ class CodeAgent extends BaseAgent {
 
   async run(prompt: string): Promise<string> {
     return this.getCompletion(prompt);
+  }
+
+  async generateCode(prompt: string): Promise<string> {
+    const modelId = 'gemini-1.5-flash'; // Or get from config
+    return callLLM(modelId, prompt);
   }
 }
 
