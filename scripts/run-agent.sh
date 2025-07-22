@@ -7,4 +7,4 @@ if [ -z "$ROUND_ID" ]; then
   exit 1
 fi
 
-npx ts-node scripts/run-agent.ts $ROUND_ID
+npx tsx scripts/run-agent.ts $ROUND_ID
