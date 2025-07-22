@@ -37,4 +37,21 @@ program
     console.log(`Default model set to: ${modelId}`);
   });
 
+const { exec } = require('child_process');
+
+program
+  .command('run-round <roundId>')
+  .description('Run a specific round')
+  .action((roundId) => {
+    console.log(`Running round ${roundId}...`);
+    exec(`bash scripts/run-agent.sh ${roundId}`, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error executing run-agent.sh: ${error}`);
+        return;
+      }
+      console.log(stdout);
+      console.error(stderr);
+    });
+  });
+
 program.parse(process.argv);
