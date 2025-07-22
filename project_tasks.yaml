@@ -24,3 +24,9 @@ backlog:
     status: "Not Started"
     priority: "High"
     assigned_agent: "Specification Module, Code Agent, Docs Agent"
+  - id: 2
+    title: "Round 2 - Tech Stack Design & Documentation"
+    description: "Based on the project targets (Windows via Electron, Browser via React) and preferred technologies, design a comprehensive tech stack for AutoDev AI Hub. This includes choices for Backend, Frontend, Database, CI/CD, and Infrastructure as Code. The output should justify the choices and include high-level architectural considerations in TECH_STACK.md."
+    status: "Not Started"
+    priority: "High"
+    assigned_agent: "Specification Module, Code Agent, Docs Agent"
